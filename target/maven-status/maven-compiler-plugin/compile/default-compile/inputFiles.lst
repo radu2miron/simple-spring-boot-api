@@ -1,0 +1,16 @@
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/LoginController.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/exceptions/NotFoundException.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/TaskDTO.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/Task.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/exceptions/RestResponseExceptionHandler.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/TaskService.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/Application.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/OpenApiConfiguration.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/exceptions/UnauthorizedException.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/JwtAuthorizationFilter.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/CredentialsDTO.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/JwtUtil.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/TaskRepository.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/security/JwtTokenDTO.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/TaskController.java
+/home/radu/scoala/2024-2025/licenta/simple-spring-boot-api/src/main/java/edu/tucn/li/task/TaskMapper.java

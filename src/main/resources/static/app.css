@@ -1,0 +1,107 @@
+/* Base styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Container styling */
+.container {
+    /* Using a 600px max-width for a consistent look;
+       if needed, you can override this for specific pages (e.g., a smaller container for login) */
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Section styling (for todos page) */
+section {
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* List item styling (for todos page) */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    background: #fafafa;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Container for aligning buttons */
+.btn-container {
+    display: flex;
+    gap: 5px;
+}
+
+/* Base button styling */
+button {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Specific button styles */
+.complete-btn {
+    background-color: #28a745; /* green */
+}
+
+.delete-btn {
+    background-color: #dc3545; /* red */
+}
+
+.default-btn {
+    background-color: #007BFF; /* blue */
+}
+
+.default-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Logout button styling */
+.logout-btn {
+    float: right;
+    margin-bottom: 20px;
+    background-color: #6c757d;
+}

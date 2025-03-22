@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todos - Todo App</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="container">
+    <h1>Todo List</h1>
+    <button class="logout-btn" id="logout">Logout</button>
+
+    <section>
+        <h2>Create Task</h2>
+        <form id="taskForm">
+            <input type="text" id="description" placeholder="Task description" required/>
+            <button type="submit" class="default-btn">Add Task</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Active Tasks</h2>
+        <ul id="activeTaskList"></ul>
+    </section>
+
+    <section>
+        <h2>Completed Tasks</h2>
+        <ul id="completedTaskList"></ul>
+    </section>
+</div>
+</body>
+<!--<script src="todos.js"></script>-->
+<script>
+    // Retrieve token from localStorage
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+        window.location.href = 'login.html';
+    }
+
+    // Utility function to build headers with the token
+    function getAuthHeaders() {
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        };
+    }
+
+    // Logout: remove token and redirect to login page
+    document.getElementById('logout').addEventListener('click', function () {
+        localStorage.removeItem('authToken');
+        window.location.href = 'index.html';
+    });
+
+    // Render tasks into the provided list element.
+    function renderTasks(tasks, listElementId) {
+        const listElement = document.getElementById(listElementId);
+        listElement.innerHTML = '';
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+
+            // Create a span for the task description
+            const taskText = document.createElement('span');
+            taskText.textContent = task.description + (task.completed ? " (completed)" : "");
+
+            // Create a container for buttons
+            const btnContainer = document.createElement('div');
+            btnContainer.className = 'btn-container';
+
+            // Update button (toggle completion)
+            const updateBtn = document.createElement('button');
+            if (task.completed) {
+                updateBtn.textContent = 'Mark Active';
+                updateBtn.className = 'default-btn';
+            } else {
+                updateBtn.textContent = 'Mark Completed';
+                updateBtn.className = 'complete-btn';
+            }
+            updateBtn.addEventListener('click', () => updateTask(task));
+
+            // Delete button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.addEventListener('click', () => deleteTask(task.id));
+
+            btnContainer.appendChild(updateBtn);
+            btnContainer.appendChild(deleteBtn);
+
+            li.appendChild(taskText);
+            li.appendChild(btnContainer);
+            listElement.appendChild(li);
+        });
+    }
+
+    // Fetch both active and completed tasks
+    async function fetchTasks() {
+        try {
+            const [activeResponse, completedResponse] = await Promise.all([
+                fetch('/tasks/find?completed=false', {headers: getAuthHeaders()}),
+                fetch('/tasks/find?completed=true', {headers: getAuthHeaders()})
+            ]);
+            if (!activeResponse.ok || !completedResponse.ok) {
+                throw new Error('Failed to fetch tasks');
+            }
+            const activeTasks = await activeResponse.json();
+            const completedTasks = await completedResponse.json();
+            renderTasks(activeTasks, 'activeTaskList');
+            renderTasks(completedTasks, 'completedTaskList');
+        } catch (error) {
+            console.error('Error fetching tasks:', error);
+        }
+    }
+
+    // Create a new task
+    document.getElementById('taskForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const description = document.getElementById('description').value;
+        try {
+            const response = await fetch('/tasks', {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({description: description, completed: false})
+            });
+            if (!response.ok) {
+                throw new Error('Failed to create task');
+            }
+            document.getElementById('description').value = '';
+            fetchTasks();
+        } catch (error) {
+            console.error('Error creating task:', error);
+        }
+    });
+
+    // Update a task: toggle its completion status
+    async function updateTask(task) {
+        const newStatus = !task.completed;
+        try {
+            const response = await fetch(`/tasks?id=${task.id}`, {
+                method: 'PUT',
+                headers: getAuthHeaders(),
+                body: JSON.stringify({description: task.description, completed: newStatus})
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update task');
+            }
+            fetchTasks();
+        } catch (error) {
+            console.error('Error updating task:', error);
+        }
+    }
+
+    // Delete a task by id
+    async function deleteTask(id) {
+        try {
+            const response = await fetch(`/tasks?id=${id}`, {
+                method: 'DELETE',
+                headers: getAuthHeaders()
+            });
+            if (!response.ok) {
+                throw new Error('Failed to delete task');
+            }
+            fetchTasks();
+        } catch (error) {
+            console.error('Error deleting task:', error);
+        }
+    }
+
+    // Load tasks on page load
+    fetchTasks();
+</script>
+</html>
